@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/reveal";
 import { businessDetails, extensionTypes, trustHighlights } from "@/content/site-content";
 
@@ -64,17 +64,15 @@ export function HeroBlueprint() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [progress, setProgress] = useState(0);
 
-  const revealImage = useMemo(() => progress > 0.9, [progress]);
-
   useEffect(() => {
     let frame = 0;
     const duration = 3200;
     const start = performance.now();
 
     const animate = (time: number) => {
-      const elapsed = Math.min(time - start, duration);
-      setProgress(elapsed / duration);
-      if (elapsed < duration) frame = requestAnimationFrame(animate);
+      const elapsed = time - start;
+      setProgress((elapsed % duration) / duration);
+      frame = requestAnimationFrame(animate);
     };
 
     frame = requestAnimationFrame(animate);
@@ -190,7 +188,7 @@ export function HeroBlueprint() {
         ref={canvasRef}
         className="blueprint-grid absolute inset-0 mix-blend-screen"
         initial={{ opacity: 1 }}
-        animate={{ opacity: revealImage ? 0.28 : 0.95 }}
+        animate={{ opacity: 0.95 }}
         transition={{ duration: 1.2, ease: "easeInOut" }}
       />
 
