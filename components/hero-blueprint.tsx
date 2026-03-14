@@ -66,7 +66,7 @@ export function HeroBlueprint() {
 
   useEffect(() => {
     let frame = 0;
-    const duration = 3200;
+    const duration = 5000;
     const start = performance.now();
 
     const animate = (time: number) => {
